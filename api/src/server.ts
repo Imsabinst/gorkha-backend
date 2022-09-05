@@ -1,11 +1,37 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import errorHandler from "errorhandler";
+import mongoose from "mongoose";
+import app from "./app";
+import logger from "./util/logger";
 
-const app: Application = express();
+const MONGODB_URI_LOCAL = process.env["MONGODB_URI_LOCAL"] as string;
+const mongoUrl = MONGODB_URI_LOCAL;
 
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Hello");
-});
+mongoose
+  .connect(mongoUrl)
+  .then(() => {
+    logger.info("Connected to MongoDB");
+  })
+  .catch((err: Error) => {
+    console.log(
+      "MongoDB connection error. Please make sure MongoDB is running. " + err
+    );
+    process.exit(1);
+  });
 
-app.listen(5002, () => {
-  console.log("running");
+/**
+ * Error Handler. Provides error handing middleware
+   only use in development
+ */
+if (process.env.NODE_ENV === "development") {
+  app.use(errorHandler());
+}
+
+// Start Express server
+app.listen(app.get("port"), () => {
+  console.log(
+    "  App is running at http://localhost:%d in %s mode",
+    app.get("port"),
+    app.get("env")
+  );
+  console.log("  Press CTRL-C to stop\n");
 });
