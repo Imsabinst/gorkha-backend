@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 
 import bannerRouter from "./routers/banner";
+import userRouter from "./routers/user";
 import apiContentTypes from "./middlewares/apiContentTypes";
 import apiErrorHandler from "./middlewares/apiErrorHandler";
 
@@ -19,8 +20,7 @@ app.use(express.json());
 app.use(cors());
 
 // Set up routers
-
-// Set up routers
+app.use("/api/v1/users", userRouter);
 app.use("/api/v1/banners", bannerRouter);
 
 // Custom API error handler

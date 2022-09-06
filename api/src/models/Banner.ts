@@ -6,16 +6,21 @@ export type BannerDocument = Document & {
   background_image: string;
 };
 
-const BannerSchema = new mongoose.Schema({
-  main_heading: {
-    type: String,
+const BannerSchema = new mongoose.Schema(
+  {
+    main_heading: {
+      type: String,
+    },
+    sub_heading: {
+      type: String,
+    },
+    background_image: {
+      type: String,
+    },
   },
-  sub_heading: {
-    type: String,
-  },
-  background_image: {
-    type: String,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 export default mongoose.model<BannerDocument>("Banner", BannerSchema);
