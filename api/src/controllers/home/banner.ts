@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
-import { BadRequestError } from "../helpers/apiError";
-import Banner from "../models/Banner";
-import BannerServices from "../services/banner";
+import { BadRequestError } from "../../helpers/apiError";
+import Banner from "../../models/home/Banner";
+import BannerServices from "../../services/banner";
 
 //GET all banners
 export const findAll = async (

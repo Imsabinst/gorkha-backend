@@ -1,4 +1,4 @@
-import Banner, { BannerDocument } from "../models/Banner";
+import Banner, { BannerDocument } from "../models/home/Banner";
 import { NotFoundError } from "../helpers/apiError";
 
 const save = async (banner: BannerDocument): Promise<BannerDocument> => {
