@@ -15,6 +15,7 @@ const BannerSchema = new mongoose.Schema(
     sub_heading: {
       type: String,
     },
+
     background_image: {
       type: String,
     },
