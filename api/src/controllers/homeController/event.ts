@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
 import { BadRequestError } from "../../helpers/apiError";
-import Dining from "../../models/home/DiningSection";
-import DiningServices from "../../services/homeServices/dining";
+import Event from "../../models/home/EventSection";
+import EventServices from "../../services/homeServices/event";
 
 //GET all Dining
 export const findAll = async (
@@ -11,7 +11,7 @@ export const findAll = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await DiningServices.findAll());
+    res.json(await EventServices.findAll());
   } catch (error) {
     if (error instanceof Error && error.name == "ValidationError") {
       next(new BadRequestError("Invalid Request", error));
@@ -22,20 +22,22 @@ export const findAll = async (
 };
 
 // POST /Dining
-export const createDiningSection = async (
+export const createEventSection = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { title, description, details } = req.body;
-    const dining = new Dining({
-      title,
+    const { name, image, description, date, status } = req.body;
+    const event = new Event({
+      name,
+      image,
       description,
-      details,
+      date,
+      status,
     });
-    await DiningServices.save(dining);
-    res.json(dining);
+    await EventServices.save(event);
+    res.json(event);
   } catch (error) {
     if (error instanceof Error && error.name == "ValidationError") {
       next(new BadRequestError("Invalid Request", error));
@@ -45,20 +47,20 @@ export const createDiningSection = async (
   }
 };
 
-//UPDATE /DiningSection
-export const updateDining = async (
+//UPDATE /Event section
+export const updateEvent = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const update = req.body;
-    const diningSectionId = req.params.diningSectionId;
-    const updatedDiningSection = await DiningServices.updateDiningSection(
-      diningSectionId,
+    const eventSectionId = req.params.eventSectionId;
+    const updateEvent = await EventServices.updateEventSection(
+      eventSectionId,
       update
     );
-    res.json(updatedDiningSection);
+    res.json(updateEvent);
   } catch (error) {
     if (error instanceof Error && error.name == "ValidationError") {
       next(new BadRequestError("Invalid Request", error));

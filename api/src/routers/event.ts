@@ -1,16 +1,16 @@
 import express from "express";
 
 import {
-  createDiningSection,
+  createEventSection,
   findAll,
-  updateDining,
-} from "../controllers/homeController/dining";
+  updateEvent,
+} from "../controllers/homeController/event";
 
 const router = express.Router();
 
 // Every path we define here will get /api/v1/diningsection prefix
 router.get("/", findAll);
-router.post("/", createDiningSection);
-router.put("/:diningSectionId", updateDining);
+router.post("/", createEventSection);
+router.put("/:eventSectionId", updateEvent);
 
 export default router;

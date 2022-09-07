@@ -26,7 +26,7 @@ const updateDiningSection = async (
   );
 
   if (!foundDiningSection) {
-    throw new NotFoundError(`Dining Exp Section ${diningSectionId} not found`);
+    throw new NotFoundError(`Dining  Section ${diningSectionId} not found`);
   }
 
   return foundDiningSection;

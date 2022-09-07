@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
 import { BadRequestError } from "../../helpers/apiError";
-import Dining from "../../models/home/DiningSection";
-import DiningServices from "../../services/homeServices/dining";
+import Contact from "../../models/home/Contact";
+import ContactServices from "../../services/homeServices/contact";
 
 //GET all Dining
 export const findAll = async (
@@ -11,7 +11,7 @@ export const findAll = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await DiningServices.findAll());
+    res.json(await ContactServices.findAll());
   } catch (error) {
     if (error instanceof Error && error.name == "ValidationError") {
       next(new BadRequestError("Invalid Request", error));
@@ -21,21 +21,22 @@ export const findAll = async (
   }
 };
 
-// POST /Dining
-export const createDiningSection = async (
+// POST /Contact
+export const createContact = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { title, description, details } = req.body;
-    const dining = new Dining({
-      title,
+    const { name, email, description, status } = req.body;
+    const contact = new Contact({
+      name,
+      email,
       description,
-      details,
+      status,
     });
-    await DiningServices.save(dining);
-    res.json(dining);
+    await ContactServices.save(contact);
+    res.json(contact);
   } catch (error) {
     if (error instanceof Error && error.name == "ValidationError") {
       next(new BadRequestError("Invalid Request", error));
@@ -45,20 +46,20 @@ export const createDiningSection = async (
   }
 };
 
-//UPDATE /DiningSection
-export const updateDining = async (
+//UPDATE /Contact
+export const updateContact = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const update = req.body;
-    const diningSectionId = req.params.diningSectionId;
-    const updatedDiningSection = await DiningServices.updateDiningSection(
-      diningSectionId,
+    const contactId = req.params.contactId;
+    const updatedContact = await ContactServices.updateContact(
+      contactId,
       update
     );
-    res.json(updatedDiningSection);
+    res.json(updatedContact);
   } catch (error) {
     if (error instanceof Error && error.name == "ValidationError") {
       next(new BadRequestError("Invalid Request", error));
