@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
-import { BadRequestError } from "../helpers/apiError";
-import Banner from "../models/Banner";
-import BannerServices from "../services/banner";
+import { BadRequestError } from "../../helpers/apiError";
+import Banner from "../../models/home/BannerSection";
+import BannerServices from "../../services/homeServices/banner";
 
 //GET all banners
 export const findAll = async (
@@ -28,11 +28,12 @@ export const createBanner = async (
   next: NextFunction
 ) => {
   try {
-    const { main_heading, sub_heading, background_image } = req.body;
+    const { main_heading, sub_heading, background_image, status } = req.body;
     const banner = new Banner({
       main_heading,
       sub_heading,
       background_image,
+      status,
     });
     await BannerServices.save(banner);
     res.json(banner);
@@ -56,24 +57,6 @@ export const updateBanner = async (
     const bannerId = req.params.bannerId;
     const updatedBanner = await BannerServices.updateBanner(bannerId, update);
     res.json(updatedBanner);
-  } catch (error) {
-    if (error instanceof Error && error.name == "ValidationError") {
-      next(new BadRequestError("Invalid Request", error));
-    } else {
-      next(error);
-    }
-  }
-};
-
-//DELETE /Banner
-export const deleteBanner = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    await BannerServices.deleteBanner(req.params.bannerId);
-    res.status(204).end();
   } catch (error) {
     if (error instanceof Error && error.name == "ValidationError") {
       next(new BadRequestError("Invalid Request", error));

@@ -1,5 +1,5 @@
-import Banner, { BannerDocument } from "../models/Banner";
-import { NotFoundError } from "../helpers/apiError";
+import Banner, { BannerDocument } from "../../models/home/BannerSection";
+import { NotFoundError } from "../../helpers/apiError";
 
 const save = async (banner: BannerDocument): Promise<BannerDocument> => {
   return banner.save();
@@ -10,24 +10,12 @@ const findAll = async (): Promise<BannerDocument[]> => {
 };
 
 const updateBanner = async (
-  BannerId: string,
+  bannerId: string,
   update: Partial<BannerDocument>
 ): Promise<BannerDocument | null> => {
-  const foundBanner = await Banner.findByIdAndUpdate(BannerId, update, {
+  const foundBanner = await Banner.findByIdAndUpdate(bannerId, update, {
     new: true,
   });
-
-  if (!foundBanner) {
-    throw new NotFoundError(`Banner ${BannerId} not found`);
-  }
-
-  return foundBanner;
-};
-
-const deleteBanner = async (
-  bannerId: string
-): Promise<BannerDocument | null> => {
-  const foundBanner = Banner.findByIdAndDelete(bannerId);
 
   if (!foundBanner) {
     throw new NotFoundError(`Banner ${bannerId} not found`);
@@ -40,5 +28,4 @@ export default {
   save,
   findAll,
   updateBanner,
-  deleteBanner,
 };

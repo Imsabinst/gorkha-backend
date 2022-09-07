@@ -4,6 +4,15 @@ import dotenv from "dotenv";
 
 import bannerRouter from "./routers/banner";
 import userRouter from "./routers/user";
+import aboutSectionRouter from "./routers/about";
+import servingSectionRouter from "./routers/serving";
+import diningSectionRouter from "./routers/dining";
+import quotationRouter from "./routers/quotation";
+import exploreSectionRouter from "./routers/explore";
+import gallerySectionRouter from "./routers/gallery";
+import contactRouter from "./routers/contact";
+import eventRouter from "./routers/event";
+
 import apiContentTypes from "./middlewares/apiContentTypes";
 import apiErrorHandler from "./middlewares/apiErrorHandler";
 
@@ -22,6 +31,14 @@ app.use(cors());
 // Set up routers
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/banners", bannerRouter);
+app.use("/api/v1/aboutsection", aboutSectionRouter);
+app.use("/api/v1/servingsection", servingSectionRouter);
+app.use("/api/v1/diningsection", diningSectionRouter);
+app.use("/api/v1/quotations", quotationRouter);
+app.use("/api/v1/exploresection", exploreSectionRouter);
+app.use("/api/v1/gallerysection", gallerySectionRouter);
+app.use("/api/v1/contact", contactRouter);
+app.use("/api/v1/events", eventRouter);
 
 // Custom API error handler
 app.use(apiErrorHandler);

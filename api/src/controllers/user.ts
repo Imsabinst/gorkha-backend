@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import CryptoJS from "crypto-js";
-//const CryptoJS = require("crypto-js");
 import { Request, Response, NextFunction } from "express";
 import User from "../models/User";
 import { json } from "stream/consumers";
@@ -14,7 +13,13 @@ export const login = async (
   try {
     const user = (await User.findOne({ email: req.body.email })) as any;
     !user && res.status(401).json("Wrong Credentials");
-    console.log(user, "this is user");
+    /* console.log(user, "this is user");
+
+    const oldpass = CryptoJS.AES.decrypt(
+      "U2FsdGVkX1+XjSB5SsUCzQ2oq7yh2FCe5tmMpSeln28= ",
+      process.env.PASS_SEC as any
+    ).toString(CryptoJS.enc.Utf8);
+    console.log(oldpass, "this is old"); */
 
     const hashedPassword = CryptoJS.AES.decrypt(
       user.password,
@@ -23,7 +28,6 @@ export const login = async (
 
     const oldpassword = hashedPassword.toString(CryptoJS.enc.Utf8);
     console.log(oldpassword, "hello again");
-    console.log(req.body.password, "requst");
     oldpassword !== req.body.password &&
       res.status(401).json("Wrong Credentials: Password incorrect");
 
@@ -34,10 +38,11 @@ export const login = async (
       process.env.JWT_SEC as any,
       { expiresIn: "3d" }
     );
-    const { password, ...others } = user._doc as any;
+    const { password, ...others } = user._doc;
     res.status(200).json({ ...others, accessToken });
     next();
   } catch (err) {
     res.status(500).json(err);
+    console.log(err, "this is catch");
   }
 };

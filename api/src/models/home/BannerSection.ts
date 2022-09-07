@@ -4,6 +4,7 @@ export type BannerDocument = Document & {
   main_heading: string;
   sub_heading: string;
   background_image: string;
+  status: boolean;
 };
 
 const BannerSchema = new mongoose.Schema(
@@ -14,10 +15,15 @@ const BannerSchema = new mongoose.Schema(
     sub_heading: {
       type: String,
     },
+
     background_image: {
       type: String,
     },
+    status: {
+      type: Boolean,
+    },
   },
+
   {
     timestamps: true,
   }

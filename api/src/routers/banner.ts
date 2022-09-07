@@ -4,8 +4,7 @@ import {
   createBanner,
   findAll,
   updateBanner,
-  deleteBanner,
-} from "../controllers/banner";
+} from "../controllers/homeController/banner";
 
 const router = express.Router();
 
@@ -13,6 +12,5 @@ const router = express.Router();
 router.get("/", findAll);
 router.post("/", createBanner);
 router.put("/:bannerId", updateBanner);
-router.delete("/:bannerId", deleteBanner);
 
 export default router;
